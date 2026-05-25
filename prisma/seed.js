@@ -1,17 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
 const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
 const bcrypt = require("bcryptjs");
-const path = require("path");
 
-// Resolve absolute path to the SQLite file at the project root
-const dbPath = path.resolve(__dirname, "../dev.db");
-const connectionUrl = `file:${dbPath}`;
-
+const connectionUrl = process.env.DATABASE_URL || "file:./dev.db";
 const adapter = new PrismaBetterSqlite3({ url: connectionUrl });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log("Seeding database at:", dbPath);
+  console.log("Seeding database at:", connectionUrl);
 
   // 1. Clean existing records
   await prisma.task.deleteMany({});
