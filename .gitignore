@@ -30,8 +30,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files - keep .env (has DATABASE_URL), ignore secrets
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
@@ -40,4 +43,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Prisma generated client (re-generated on each build via postinstall)
 /app/generated/prisma
+
+# SQLite database files - generated on Render via prisma db push
+*.db
+*.db-shm
+*.db-wal
+dev.db
